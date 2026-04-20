@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modal + Toggle Example</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Open Modal Button -->
+  <button id="open-modal">Open Modal</button>
+
+  <!-- Modal -->
+  <div class="modal">
+    <div class="modal-content">
+      <p>Hello! I am a modal 🎉</p>
+      <button id="close-modal">Close</button>
+    </div>
+  </div>
+
+  <!-- Hamburger + Nav -->
+  <button class="hamburger">☰</button>
+
+  <nav class="nav">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <script src="app.js">
+
+
+const modal = document.querySelector('.modal');
+const openBtn = document.querySelector('#open-modal');
+const closeBtn = document.querySelector('#close-modal');
+
+openBtn.addEventListener('click', () => {
+  modal.classList.add('is-open');
+});
+
+closeBtn.addEventListener('click', () => {
+  modal.classList.remove('is-open');
+});
+
+// Hamburger toggle
+const nav = document.querySelector('.nav');
+const hamburger = document.querySelector('.hamburger');
+
+hamburger.addEventListener('click', () => {
+  nav.classList.toggle('is-open');
+});
+
+
+
+  </script>
+</body>
+</html>

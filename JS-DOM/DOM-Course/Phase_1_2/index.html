@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document-Object-Model Phase-1</title>
+</head>
+
+<body>
+  <h1>Document Object Model</h1>
+
+  <ul class="menu">
+    <li class="menu-item">
+      <button class="delete-btn">Delete</button>
+    </li>
+    <li class="menu-item">
+      <button class="delete-btn">Delete</button>
+    </li>
+    <li class="menu-item">
+      <button class="delete-btn">Delete</button>
+    </li>
+    <li class="menu-item">
+      <button class="delete-btn">Delete</button>
+    </li>
+  </ul>
+
+  <button id="submit-btn">Submit</button>
+
+  <script>
+    // Your JavaScript code here
+
+
+
+    function inspect(selector) {
+      const method = selector.startsWith('#') ? 'getElementById' : 'querySelector';
+      const el = method === 'getElementById'
+        ? document.getElementById(selector.slice(1))
+        : document.querySelector(selector);
+
+      if (!el) { console.warn(`No element found for: ${selector}`); return; }
+
+      console.group(`Element: ${selector}`);
+      console.log('Tag:       ', el.tagName);
+      console.log('ID:        ', el.id || '(none)');
+      console.log('Classes:   ', [...el.classList].join(', ') || '(none)');
+      console.log('Children:  ', el.children.length);
+      console.log('Text:      ', el.textContent.trim().slice(0, 80));
+      console.log('Parent:    ', el.parentElement?.tagName);
+      console.groupEnd();
+    }
+
+    // Try it:
+    inspect('body');
+    inspect('h1');
+    inspect('.some-class-on-this-page');
+    //   document
+    //     .querySelector(".delete-btn")
+    //     .addEventListener("click", function (e) {
+    //       const listItem = e.target.closest(".menu-item");
+    //       if (listItem) {
+    //         listItem.remove();
+    //       }
+    //       console.log("Delete button clicked!");
+    //     });
+
+
+
+
+
+    // document.querySelectorAll(".delete-btn").forEach((btn) => {
+    //   btn.addEventListener("click", function (e) {
+    //     const listItem = e.target.closest(".menu-item");
+    //     if (listItem) {
+    //       listItem.remove();
+    //     }
+    //     console.log("Delete button clicked!");
+    //   });
+    // });
+
+    //   const btn = document.getElementById("submit-btn");
+    //   console.log("I am btn ", btn);
+    //   console.log("I am btn noteType", btn.nodeType);
+    //   console.log("I am btn nodeName", btn.nodeName);
+    //   console.log("I am btn nodeValue", btn.nodeValue);
+    //   console.log("I am btn childNodes", btn.childNodes);
+    //   console.log("I am btn parentNode", btn.parentNode);
+    //   console.log("I am btn parentNode nodeName", btn.parentNode.nodeName);
+    //   console.log("I am btn === null", btn === null);
+
+    // const body = document.body;
+    // console.log(body);
+    // console.log(body.nodeType);
+    // console.log(body.nodeName);
+    // console.log(body.nodeValue);
+    // console.log(body.childNodes);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Object Model</title>
+    <style>
+        .card {
+            border: 1px solid #333;
+            padding: 20px;
+            margin: 20px;
+            font-size: 18px;
+        }
+
+        .box {
+            border: 1px solid #333;
+            padding: 15px;
+            margin: 15px;
+            width: 200px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+        }
+
+        img { width: 250px; display: block; margin-bottom: 10px; }
+
+
+
+        /* Modal base */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+/* Active modal */
+.modal.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+/* Modal box */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Nav */
+.nav {
+  display: none;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.nav.is-open {
+  display: flex;
+}
+
+/* Hamburger */
+.hamburger {
+  margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+
+<!-- Open Modal Button -->
+  <button id="open-modal">Open Modal</button>
+
+  <!-- Modal -->
+  <div class="modal">
+    <div class="modal-content">
+      <p>Hello! I am a modal 🎉</p>
+      <button id="close-modal">Close</button>
+    </div>
+  </div>
+
+  <!-- Hamburger + Nav -->
+  <button class="hamburger">☰</button>
+
+  <nav class="nav">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+
+
+
+<!-- 
+
+ <h3>Hero Image</h3>
+  <img class="hero-img"
+       src="https://fastly.picsum.photos/id/337/800/600.jpg?hmac=Gx8pjhwU87sYnp2K9YBi3hvR78dBeAUbrVF6KJCwGJA"
+       alt="Old image">
+
+  <button onclick="changeImage()">Change to Real Image</button>
+</div>
+
+<div class="box">
+  <h3>Input Example</h3>
+  <input type="text" id="email" disabled placeholder="Disabled input">
+  <button onclick="enableInput()">Enable Input</button>
+</div>
+
+<div class="box">
+  <h3>Link Example</h3>
+  <a class="cta" href="https://example.com" target="_blank">Visit Site</a>
+  <button onclick="checkLink()">Check Link</button>
+</div>
+
+<div class="box product"
+     data-id="42"
+     data-category="shoes">
+
+  <h3>Product</h3>
+
+  <button class="add-to-cart"
+          data-product-id="42"
+          data-price="19.99">
+    Add to Cart
+  </button>
+
+  <p id="cart-count">0</p>
+</div> -->
+
+
+
+<!-- <div class="box">
+    <p>Price: $<span class="price">29.99</span></p>
+    <button onclick="updatePrice()">Apply discount</button>
+</div>
+
+<div class="box">
+    <p>Cart Item: <span id="cart-count">2</span> </p>
+    <button onclick="addToCart()">Add to Cart</button>
+</div> -->
+
+
+<!-- 
+    <div class="card"></div>
+
+    <h1>Form XSS Demo</h1>
+
+    <h2> Unsafe (innerHTML)</h2>
+    <div class="card" id="unsafe"></div>
+
+    <h2> Safe (textContent)</h2>
+    <div class="card" id="safe"></div>
+    <button onclick="runDemo()">Run Demo </button> -->
+
+
+
+
+<script src="./index.js">
+
+</script>
+</body>
+</html>
