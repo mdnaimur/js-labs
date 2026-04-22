@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Item List</title>
+  <style>
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border: 1px solid #eee;
+      margin: 4px 0;
+      border-radius: 6px;
+    }
+    .item button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <input id="filter" placeholder="Filter items…" />
+  <button id="add-btn">Add random</button>
+  <ul id="list"></ul>
+
+<script>
+  const names = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape'];
+  let items = [];
+
+  const filterInput = document.getElementById('filter');
+  const list = document.getElementById('list');
+  const addBtn = document.getElementById('add-btn');
+
+  // Add item
+  function addItem() {
+    items.push({
+      id: Date.now(),
+      name: names[Math.floor(Math.random() * names.length)],
+      price: Math.floor(Math.random() * 10) + 1
+    });
+    render();
+  }
+
+  // Remove item
+  function removeItem(id) {
+    items = items.filter(i => i.id !== id);
+    render();
+  }
+
+  // Event delegation for remove
+  list.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON') {
+      const li = e.target.closest('li');
+      const id = Number(li.dataset.id);
+      removeItem(id);
+    }
+  });
+
+  function render() {
+    const filter = filterInput.value.toLowerCase();
+    const frag = document.createDocumentFragment();
+
+    const filtered = items.filter(i =>
+      i.name.toLowerCase().includes(filter)
+    );
+
+    filtered.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'item';
+      li.dataset.id = item.id;
+
+      const name = document.createElement('span');
+      name.textContent = `${item.name} — £${item.price}`;
+
+      const btn = document.createElement('button');
+      btn.textContent = 'Remove';
+
+      li.append(name, btn);
+      frag.appendChild(li);
+    });
+
+    list.replaceChildren(frag);
+  }
+
+  // Events
+  addBtn.addEventListener('click', addItem);
+  filterInput.addEventListener('input', render);
+
+  // Initial render
+  render();
+</script>
+
+</body>
+</html>
