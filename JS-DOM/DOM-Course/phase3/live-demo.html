@@ -1,0 +1,150 @@
+
+<style>
+  .lab { padding: 1rem 0; display: flex; flex-direction: column; gap: 16px; }
+  .lab-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 520px) { .lab-row { grid-template-columns: 1fr; } }
+  .lab-panel { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px; }
+  .lab-panel h4 { font-size: 13px; font-weight: 500; margin: 0 0 10px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+  .lab-controls { display: flex; flex-direction: column; gap: 8px; }
+  .ctrl-row { display: flex; gap: 6px; align-items: center; }
+  .ctrl-row label { font-size: 12px; color: var(--color-text-secondary); min-width: 72px; }
+  .ctrl-row input[type="text"] { flex: 1; font-size: 12px; font-family: var(--font-mono); }
+  .ctrl-row input[type="color"] { width: 32px; height: 28px; padding: 2px; border-radius: 4px; border: 0.5px solid var(--color-border-secondary); cursor: pointer; background: var(--color-background-primary); }
+  .ctrl-row select { flex: 1; font-size: 12px; }
+  .ctrl-row button { font-size: 12px; padding: 5px 10px; }
+  .preview-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 16px;
+    transition: all 0.25s ease;
+  }
+  .preview-card h2 { font-size: 16px; font-weight: 500; margin: 0 0 6px; transition: all 0.25s; }
+  .preview-card p  { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 12px; transition: all 0.25s; }
+  .preview-card .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--color-background-info); color: var(--color-text-info); margin-bottom: 8px; }
+  .preview-card.is-featured { border: 1.5px solid var(--color-border-warning); background: var(--color-background-warning); }
+  .preview-card.is-hidden { opacity: 0.2; pointer-events: none; }
+  .preview-card.is-large h2 { font-size: 22px; }
+  .preview-card.is-dark { background: #1a1a18; border-color: #444; }
+  .preview-card.is-dark h2 { color: #e8e6de; }
+  .preview-card.is-dark p  { color: #9c9a92; }
+  .code-out { font-family: var(--font-mono); font-size: 11px; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 8px 10px; color: var(--color-text-secondary); min-height: 44px; white-space: pre; overflow-x: auto; margin-top: 8px; line-height: 1.7; }
+  .class-badge { display: inline-block; font-size: 10px; font-family: var(--font-mono); padding: 1px 6px; border-radius: 4px; background: var(--color-background-info); color: var(--color-text-info); margin: 2px; }
+  .classes-row { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 6px; min-height: 22px; }
+</style>
+
+<h2 class="sr-only">DOM manipulation lab — interact with controls to manipulate a live card element and see the equivalent JavaScript.</h2>
+
+<div class="lab">
+  <div class="lab-row">
+    <div class="lab-panel">
+      <h4>Live preview</h4>
+      <div class="preview-card" id="pc">
+        <span class="tag" id="pc-tag">Featured</span>
+        <h2 id="pc-title">Product Card</h2>
+        <p id="pc-body">A great item for your collection.</p>
+        <div style="font-size:12px;color:var(--color-text-tertiary);">data-price: <span id="pc-price-out">29</span></div>
+      </div>
+      <div style="margin-top:10px;">
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;">Active classes</div>
+        <div class="classes-row" id="classes-row"></div>
+      </div>
+    </div>
+
+    <div class="lab-panel">
+      <h4>Manipulate</h4>
+      <div class="lab-controls">
+
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px;">textContent</div>
+        <div class="ctrl-row">
+          <label>Title</label>
+          <input type="text" id="ctrl-title" value="Product Card" oninput="setTitle(this.value)" />
+        </div>
+        <div class="ctrl-row">
+          <label>Body</label>
+          <input type="text" id="ctrl-body" value="A great item for your collection." oninput="setBody(this.value)" />
+        </div>
+
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:6px;margin-bottom:2px;">setAttribute / dataset</div>
+        <div class="ctrl-row">
+          <label>Tag text</label>
+          <input type="text" id="ctrl-tag" value="Featured" oninput="setTag(this.value)" />
+        </div>
+        <div class="ctrl-row">
+          <label>data-price</label>
+          <input type="text" id="ctrl-price" value="29" oninput="setPrice(this.value)" />
+        </div>
+
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:6px;margin-bottom:2px;">classList.toggle</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <button onclick="toggle('is-featured')">is-featured</button>
+          <button onclick="toggle('is-hidden')">is-hidden</button>
+          <button onclick="toggle('is-large')">is-large</button>
+          <button onclick="toggle('is-dark')">is-dark</button>
+        </div>
+
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:6px;margin-bottom:2px;">inline style</div>
+        <div class="ctrl-row">
+          <label>bg color</label>
+          <input type="color" id="ctrl-bg" value="#ffffff" oninput="setBg(this.value)" />
+          <button onclick="clearBg()" style="font-size:11px;">clear</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="lab-panel">
+    <h4>Generated JS</h4>
+    <div class="code-out" id="code-out">// interact above to see the equivalent JS</div>
+  </div>
+</div>
+
+<script>
+  const pc = document.getElementById('pc');
+  const classesRow = document.getElementById('classes-row');
+  const codeOut = document.getElementById('code-out');
+
+  function updateClasses() {
+    const cls = [...pc.classList].filter(c => c !== 'preview-card');
+    classesRow.innerHTML = cls.length
+      ? cls.map(c => `<span class="class-badge">.${c}</span>`).join('')
+      : '<span style="font-size:11px;color:var(--color-text-tertiary)">none</span>';
+  }
+
+  function showCode(line) { codeOut.textContent = line; }
+
+  function setTitle(v) {
+    document.getElementById('pc-title').textContent = v;
+    showCode(`document.querySelector('#pc-title').textContent = '${v}';`);
+  }
+  function setBody(v) {
+    document.getElementById('pc-body').textContent = v;
+    showCode(`document.querySelector('#pc-body').textContent = '${v}';`);
+  }
+  function setTag(v) {
+    document.getElementById('pc-tag').textContent = v;
+    showCode(`document.querySelector('#pc-tag').textContent = '${v}';`);
+  }
+  function setPrice(v) {
+    document.getElementById('pc-price-out').textContent = v;
+    showCode(`card.dataset.price = '${v}';\n// Equivalent: card.setAttribute('data-price', '${v}');`);
+  }
+  function toggle(cls) {
+    pc.classList.toggle(cls);
+    const state = pc.classList.contains(cls);
+    showCode(`card.classList.toggle('${cls}');\n// Result: class is now ${state ? 'ADDED' : 'REMOVED'}\n// card.classList.contains('${cls}') → ${state}`);
+    updateClasses();
+  }
+  function setBg(v) {
+    pc.style.backgroundColor = v;
+    showCode(`card.style.backgroundColor = '${v}';\n// inline style overrides stylesheet`);
+  }
+  function clearBg() {
+    pc.style.backgroundColor = '';
+    document.getElementById('ctrl-bg').value = '#ffffff';
+    showCode(`card.style.backgroundColor = '';\n// empty string removes the inline style`);
+  }
+
+  updateClasses();
+</script>

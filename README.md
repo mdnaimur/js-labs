@@ -72,3 +72,10 @@ img.getAttribute('src');                   // "/images/old.jpg"
 img.setAttribute('src', '/images/new.jpg'); // swap the image
 img.setAttribute('alt', 'New hero image'); // add/update alt text
 ```
+
+
+SOME resource:
+
+1. https://github.com/mrhm-dev/functional-javascript-tutorial
+2. https://github.com/mrhm-dev/dom-project1
+3. 

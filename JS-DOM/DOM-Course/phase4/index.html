@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content "width=device-width, intial-scale= 1.0">
+    <title>DOM Course - Phase 4</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <h2> Student Registration Form with Validation</h2>
+     <form onSubmit="return validateForm()">
+    <div>
+        Name: <br>
+        <input type="text" id="name"><br><br>
+       
+    </div>
+    <div>
+        Email: <br>
+        <input type="text" id="email"><br><br>
+        
+    </div>
+    <div>
+        Password: <br>
+        <input type="password" id="password"><br><br>
+       
+    </div>
+    <div>
+        Age: <br>
+        <input type="number" id="age"><br><br>
+        
+    </div>
+
+    <input type="submit" value="Submit">
+ <span id="errorMsg" class="error"></span><br>
+    </form>
+
+</body>
+<script src="./index.js"></script>
+
+</html>

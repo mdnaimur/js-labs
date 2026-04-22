@@ -1,4 +1,19 @@
 
+
+const toggleTheme = () => {
+    document.body.classList.toggle('dark-mode');
+    console.log('Theme toggled. Current body classes:', document.body.classList);
+
+    isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    console.log('Theme saved to localStorage:', localStorage.getItem('theme'));
+};
+
+
+document.querySelector('#theme-toggle').addEventListener('click', toggleTheme);
+
+
+
 const modal = document.querySelector('.modal');
 const openBtn = document.querySelector('#open-modal');
 const closeBtn = document.querySelector('#close-modal');

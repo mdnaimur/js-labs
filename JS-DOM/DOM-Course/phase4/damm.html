@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Student Registration Form</h2>
+
+    <form onsubmit="return validateForm()">
+        Name: <br>
+        <input type="text" id="name"><br><br>
+
+        Email: <br>
+        <input type="text" id="email"><br><br>
+
+        Password: <br>
+        <input type="password" id="password"><br><br>
+
+        Age: <br>
+        <input type="number" id="age"><br><br>
+
+        <span id="errorMsg" class="error"></span><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        function validateForm() {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let age = document.getElementById("age").value;
+            let errorMsg = "";
+
+            // Name validation
+            if (name === "") {
+                errorMsg += "Name is required\n";
+            }
+
+            // Email validation (simple regex)
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!email.match(emailPattern)) {
+                errorMsg += "Enter valid email\n";
+            }
+
+            // Password validation
+            if (password.length < 6) {
+                errorMsg += "Password must be at least 6 characters\n";
+            }
+
+            // Age validation
+            if (age === "" || age < 18) {
+                errorMsg += "Age must be 18 or above\n";
+            }
+
+            if (errorMsg !== "") {
+                document.getElementById("errorMsg").innerText = errorMsg;
+                return false; // prevent submit
+            }
+
+            alert("Form submitted successfully!");
+            return true;
+        }
+    </script>
+
+</body>
+</html>
