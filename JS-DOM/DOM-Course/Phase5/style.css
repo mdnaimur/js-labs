@@ -11,6 +11,7 @@ button {
     margin: 5px;
     padding: 10px;
 }
+
 button:hover {
     background-color: #eee;
     cursor: pointer;
@@ -26,18 +27,100 @@ button:hover {
 
 
 #btn {
-      padding: 20px;
-      border: 2px solid #333;
-      cursor: pointer;
-      display: inline-block;
-      margin-bottom: 15px;
-    }
-    .child {
-      padding: 10px;
-      background: lightblue;
-      margin-top: 10px;
-    }
-    pre {
-      background: #f5f5f5;
-      padding: 10px;
-      border-radius: 6px;   }
+    padding: 20px;
+    border: 2px solid #333;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.child {
+    padding: 10px;
+    background: lightblue;
+    margin-top: 10px;
+}
+
+pre {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+
+hr {
+    padding: 10px;
+    color: #333;
+    background: #333;
+}
+
+
+#submit {
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.is-success {
+    background: green;
+    color: white;
+}
+
+.is-error {
+    background: red;
+    color: white;
+}
+
+/* Custom context menu */
+#menu {
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    display: none;
+}
+
+#search {
+    padding: 8px;
+    width: 250px;
+}
+
+.results li {
+    padding: 5px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal.active {
+    display: block;
+}
+
+
+
+.field {
+    margin-bottom: 15px;
+}
+
+.is-focused {
+    outline: 2px solid blue;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+input {
+    padding: 8px;
+    width: 200px;
+}

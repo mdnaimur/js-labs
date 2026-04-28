@@ -1,44 +1,65 @@
-const btn = document.getElementById('btn');
-  const output = document.getElementById('output');
-  const link = document.getElementById('link');
+const input = document.querySelector("#bio");
+const form = document.querySelector("#myForm");
+const charCount = document.getElementById("charCount");
 
-  btn.addEventListener('click', function(event) {
-    // Build info text
-    const info = `
-event.type: ${event.type}
+// ---- Helper functions ----
+function validateField(el) {
+  if (el.name === "email") {
+    const errorEl = document.getElementById("emailError");
+    if (!el.value.includes("@")) {
+      errorEl.textContent = "Invalid email";
+    } else {
+      errorEl.textContent = "";
+    }
+  }
+}
 
-TARGET vs CURRENTTARGET:
-event.target: ${event.target.className || event.target.id}
-event.currentTarget: ${event.currentTarget.id}
+async function submitToAPI(data) {
+  console.log("Submitting to API:", data);
+  // fake delay
+  return new Promise((resolve) => setTimeout(resolve, 1000));
+}
 
-POSITION:
-clientX: ${event.clientX}
-clientY: ${event.clientY}
-pageX: ${event.pageX}
-pageY: ${event.pageY}
+// ---- Input events ----
+input.addEventListener("input", (e) => {
+  const value = e.target.value;
+  console.log("Current value:", value);
+  charCount.textContent = `${value.length}/100`;
+});
 
-MODIFIER KEYS:
-shiftKey: ${event.shiftKey}
-ctrlKey: ${event.ctrlKey}
-altKey: ${event.altKey}
-metaKey: ${event.metaKey}
-`;
+input.addEventListener("blur", (e) => {
+  validateField(e.target);
+});
 
-    output.textContent = info;
+input.addEventListener("focus", (e) => {
+  e.target.closest(".field")?.classList.add("is-focused");
+});
 
-    console.log('Event object:', event);
+input.addEventListener("blur", (e) => {
+  e.target.closest(".field")?.classList.remove("is-focused");
+});
 
-    // Stop bubbling (try commenting this to see difference)
-    event.stopPropagation();
-  });
+// ---- Form submit ----
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  // Demonstrate bubbling
-  document.body.addEventListener('click', () => {
-    console.log('Body received click (bubbling)');
-  });
+  const data = new FormData(form);
 
-  // preventDefault demo
-  link.addEventListener('click', function(event) {
-    event.preventDefault();
-    alert('Default navigation prevented!');
-  });
+  console.log("Email:", data.get("email"));
+  console.log("Password:", data.get("password"));
+
+  await submitToAPI(Object.fromEntries(data));
+  alert("Form submitted!");
+});
+
+// ---- Select ----
+const dropdown = document.querySelector("select");
+dropdown.addEventListener("change", (e) => {
+  console.log("Selected:", e.target.value);
+});
+
+// ---- Checkbox ----
+const checkbox = document.querySelector('input[type="checkbox"]');
+checkbox.addEventListener("change", (e) => {
+  console.log("Checked:", e.target.checked);
+});

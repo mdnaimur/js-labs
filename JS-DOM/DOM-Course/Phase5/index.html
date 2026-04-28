@@ -12,6 +12,73 @@
 </head>
 
 <body>
+
+    <h2>Form Events Demo</h2>
+
+<form id="myForm">
+  
+  <div class="field">
+    <label>Email:</label><br>
+    <input type="text" name="email" placeholder="Enter email" />
+    <div class="error" id="emailError"></div>
+  </div>
+
+  <div class="field">
+    <label>Password:</label><br>
+    <input type="password" name="password" placeholder="Enter password" />
+  </div>
+
+  <div class="field">
+    <label>Bio:</label><br>
+    <input type="text" id="bio" maxlength="100" />
+    <div id="charCount">0/100</div>
+  </div>
+
+  <div class="field">
+    <label>Choose option:</label><br>
+    <select name="option">
+      <option value="">Select</option>
+      <option value="one">One</option>
+      <option value="two">Two</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>
+      <input type="checkbox" name="agree" /> Agree to terms
+    </label>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+
+
+
+    <hr>
+<h2>Keyboard Events Demo</h2>
+
+<input id="search" placeholder="Type & use Enter / Esc / ↓" />
+<ul class="results">
+  <li>Result 1</li>
+  <li>Result 2</li>
+  <li>Result 3</li>
+</ul>
+
+<div id="modal" class="modal">
+  <p>Search Modal Open</p>
+</div>
+
+<hr>
+    <h2>Button Event Demo</h2>
+
+<button id="submit">Submit</button>
+
+<div id="menu">Custom Menu</div>
+
+<br>
+<br>
+    <hr>
     <div id="btn">
         Parent Button Area
         <div class="child">Child Element (click me)</div>
@@ -26,7 +93,7 @@
     <p id="message"></p>
 
 
-
+<hr>
     <h2>Event Listener Options Demo</h2>
 
     <button id="once-btn">Click Once</button>
