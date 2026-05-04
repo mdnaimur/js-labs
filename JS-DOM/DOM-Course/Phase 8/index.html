@@ -1,0 +1,185 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale= 1.0" />
+  <title>DOM Course - Phase 4</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+
+<div class="container">
+
+  <div class="container">
+    <h2>🛒 Products</h2>
+
+    <div class="controls">
+      <button onclick="loadProducts(1)">Load Category 1</button>
+      <button onclick="loadProducts(2)">Load Category 2 (error)</button>
+    </div>
+
+    <div class="count" id="count"></div>
+
+    <div class="product-grid" data-state="idle"></div>
+  </div>
+
+
+  <!-- <h2>🚀 Fetch API Methods Demo</h2>
+<div id="result"></div> -->
+  <!-- POST -->
+  <!-- <div class="card">
+    <h3>POST (Create Product)</h3>
+    <input id="name" placeholder="Product name">
+    <input id="price" placeholder="Price">
+    <button onclick="createProduct()">Create</button>
+  </div> -->
+
+  <!-- PUT -->
+  <!-- <div class="card">
+    <h3>PUT (Update Product)</h3>
+    <input id="updateId" placeholder="Product ID">
+    <input id="updateName" placeholder="New name">
+    <button onclick="updateProduct()">Update</button>
+  </div> -->
+
+  <!-- DELETE -->
+  <!-- <div class="card">
+    <h3>DELETE</h3>
+    <input id="deleteId" placeholder="Product ID">
+    <button onclick="deleteProduct()">Delete</button>
+  </div> -->
+
+  <!-- FormData -->
+  <!-- <div class="card">
+    <h3>Upload Profile (FormData)</h3>
+    <input id="username" placeholder="Name">
+    <input type="file" id="file">
+    <button onclick="uploadProfile()">Upload</button>
+  </div>
+
+  
+
+</div> -->
+
+  <!-- <div class="container">
+
+  <h2>⚡ Promise vs Async/Await</h2>
+
+  <div class="card">
+    <button class="primary" onclick="loadUserPromise(1)">
+      Load User (Promise Chain)
+    </button>
+
+    <button class="primary" onclick="loadUserAsync(5)">
+      Load User (Async/Await)
+    </button>
+
+    <div id="status"></div>
+    <div id="user"></div>
+  </div>
+
+</div> -->
+
+
+
+
+
+
+
+  <!-- <header>
+  📜 Infinite Scroll Feed Demo
+</header>
+
+<div class="feed" id="feed"></div>
+
+<div class="loading" id="loading">Loading...</div> -->
+
+
+
+
+  <!-- <h2>🚀 Performance Optimization Demo</h2> -->
+
+  <!-- 1. Transform animation -->
+  <!-- <div class="section">
+  <h3>1. Transform Animation (GPU)</h3>
+  <button onclick="startAnimation()">Start Move</button>
+  <div class="box" id="box"></div>
+</div> -->
+
+  <!-- 2. Scroll + debounce/throttle -->
+  <!-- <div class="section">
+  <h3>2. Scroll Demo (Debounce + Throttle)</h3>
+  <p id="scrollText">Scroll position: 0</p>
+</div> -->
+
+  <!-- 3. Intersection Observer -->
+  <!-- <div class="section animate-on-scroll">
+  <h3>3. Intersection Observer</h3>
+  <p>This section animates when visible</p>
+</div>
+
+<div class="spacer"></div>
+
+<div class="section animate-on-scroll">
+  <h3>Another Animated Section</h3>
+</div> -->
+
+  <!-- 4. ResizeObserver -->
+  <!-- <div class="section">
+  <h3>4. ResizeObserver</h3>
+  <div class="chart-container" id="chart">
+    Resize this window
+  </div>
+</div> -->
+
+
+  <!-- <h1>Shadow DOM Example</h1>
+
+<div class="outer-box">
+  <p>This is normal DOM (blue from global CSS)</p>
+</div> -->
+
+  <!-- Shadow Host -->
+  <!-- <div id="widget"></div>
+
+<hr> -->
+
+  <!-- Web Component Usage -->
+  <!-- <my-card>
+  <span slot="title">Laptop</span>
+  <p>This is a product description inside slot</p>
+</my-card> -->
+
+
+
+  <!-- <h2>Naive DOM vs Virtual DOM Concept</h2>
+
+    <button onclick="changeOneItem()">Change 1 Item</button>
+    <button onclick="naiveRender()">Naive Re-render (Bad)</button>
+    <button onclick="virtualUpdate()">Virtual DOM Update (Simulated)</button>
+
+    <div class="container">
+      <div class="box">
+        <h3>Naive DOM</h3>
+        <ul id="naiveList"></ul>
+      </div>
+
+      <div class="box">
+        <h3>Virtual DOM Result</h3>
+        <ul id="virtualList"></ul>
+      </div>
+    </div> -->
+
+  <!-- <h2>Layout Thrashing Demo</h2>
+
+    <button onclick="badResize(boxes)">❌ Bad Resize (Thrash)</button>
+    <button onclick="goodResize(boxes)">✅ Good Resize</button>
+    <button onclick="rafResize(boxes)">⚡ RAF Resize</button>
+
+    <div class="container" id="container"></div> -->
+  </body>
+  <script src="./index.js"></script>
+
+</html>

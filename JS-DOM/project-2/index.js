@@ -1,9 +1,24 @@
+/*
+FEATURES
+1. Random background color
+2. Show HEX code in input
+3. Copy color code
+4. Toast message (auto hide + clickable)
+5. Color preview box
+6. Copy button feedback
+7. HEX to RGB conversion
+*/
+
+// global
+let toastDiv = null;
+let historyContainer = null;
+
+// steps
+
+// steps 1: create online handler and collected neccessary reference
 window.onload = () => {
   main();
 };
-
-let toastDiv = null;
-let historyContainer = null;
 
 function main() {
   const root = document.getElementById("root");
@@ -13,64 +28,59 @@ function main() {
   const preview = document.getElementById("color-preview");
 
   historyContainer = document.getElementById("color-history");
+  console.log("I am the History Container : ", historyContainer.prepend());
 
   btn.addEventListener("click", function () {
-    console.log(" I am button for change");
     const bgColor = generateHexColor();
-    console.log("I am bg color: ", bgColor);
 
     root.style.backgroundColor = bgColor;
     preview.style.display = "block";
     preview.style.backgroundColor = bgColor;
-    preview.style.transform = "scale(1.5)";
+    // 🔁 small pop animation
+    preview.style.transform = "scale(1.1)";
     setTimeout(() => {
       preview.style.transform = "scale(1)";
     }, 150);
 
     output.value = bgColor;
-    console.log("i am output copy input: ", output.value);
-
     addToHistory(bgColor);
   });
 
   function addToHistory(color) {
     const colorDiv = document.createElement("div");
-    console.log("------------------------\n\n");
-    console.log("ColorDiv", colorDiv.dataset);
     colorDiv.className = "color-item";
     colorDiv.style.backgroundColor = color;
     colorDiv.title = color;
 
     colorDiv.addEventListener("click", () => {
-      console.log("\n\n----------------------\n\n");
-      console.log("I am colddiv EventListener");
       document.getElementById("root").style.backgroundColor = color;
       document.getElementById("color-preview").style.backgroundColor = color;
       document.getElementById("output").value = color;
     });
 
     historyContainer.prepend(colorDiv);
-    // ✅ limit history size (moved here)
-    if (historyContainer.children.length > 8) {
-      historyContainer.removeChild(historyContainer.lastChild);
-    }
+
+    cpyBtn.addEventListener("click", function () {
+      if (!output.value) return;
+      navigator.clipboard.writeText(output.value).then(() => {
+        generateToastMessage(`${output.value} copied`);
+        showToast(`${output.value} copied`);
+        cpyBtn.innerText = "Copied ✔";
+
+        setTimeout(() => {
+          cpyBtn.innerText = "Copy";
+        }, 1200);
+      });
+    });
   }
 
-  cpyBtn.addEventListener("click", function () {
-    if (!output.value) return;
-    console.log(" Navigator: ", navigator);
-    navigator.clipboard.writeText(output.value).then(() => {
-      generateToastMessage(`${output.value} copied`);
-      showToast(`${output.value} copied`);
-      cpyBtn.innerText = "Copied ✅";
-      console.log("copy value");
-
-      setTimeout(() => {
-        cpyBtn.innerText = "Copy";
-      }, 1200);
-    });
-  });
+  // limit history to 8 colors
+  if (historyContainer.children.length > 8) {
+    historyContainer.removeChild(historyContainer.lastChild);
+  }
 }
+
+// steps 2: generated random number #000000
 
 function generateHexColor() {
   const red = Math.floor(Math.random() * 256)
@@ -87,12 +97,12 @@ function generateHexColor() {
 
   return `#${red}${green}${blue}`;
 }
-
 function showToast(msg) {
   if (toastDiv) {
     toastDiv.remove();
     toastDiv = null;
   }
+
   toastDiv = document.createElement("div");
   toastDiv.className = "toast-message toast-message-slide-in";
   toastDiv.innerText = msg;

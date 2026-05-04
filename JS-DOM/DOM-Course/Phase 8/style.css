@@ -1,0 +1,444 @@
+body {
+  font-family: system-ui;
+  background: #f4f6fb;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.controls {
+  margin-bottom: 16px;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* GRID */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.product-card h2 {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+
+.price {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.btn--add {
+  background: #10b981;
+}
+
+/* SKELETON */
+.skeleton {
+  background: linear-gradient(90deg, #eee, #ddd, #eee);
+  animation: shimmer 1.2s infinite;
+  border-radius: 8px;
+  height: 80px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px;
+  }
+
+  100% {
+    background-position: 200px;
+  }
+}
+
+/* ERROR */
+.error-state {
+  text-align: center;
+  color: red;
+}
+
+.error-state button {
+  margin-top: 10px;
+  background: red;
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  color: #666;
+}
+
+.count {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+
+/* body {
+  font-family: system-ui;
+  background: #f5f7fb;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+input,
+button {
+  padding: 10px;
+  margin: 6px 0;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #4f46e5;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+} */
+
+
+/* body {
+  font-family: system-ui;
+  background: #f5f7fb;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.primary {
+  background: #4f46e5;
+  color: white;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+.user-box {
+  margin-top: 10px;
+  padding: 10px;
+  background: #eef2ff;
+  border-radius: 6px;
+} */
+
+/* body {
+    font-family: system-ui;
+    margin: 0;
+    background: #f5f7fb;
+}
+
+header {
+    padding: 15px;
+    background: #111827;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+.feed {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.feed-item {
+    background: white;
+    margin-bottom: 12px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.4s ease;
+}
+
+.feed-item.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: gray;
+} */
+
+
+
+/* body {
+  font-family: system-ui;
+  padding: 20px;
+  background: #f5f7fb;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.section {
+  margin-bottom: 40px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+} */
+
+/* ----------------------------
+   Animated Box
+---------------------------- */
+/* .box {
+  width: 50px;
+  height: 50px;
+  background: #4f46e5;
+  border-radius: 8px;
+  margin-top: 10px;
+  transition: transform 0.2s linear;
+} */
+
+/* ----------------------------
+   Scroll Animation
+---------------------------- */
+/* .animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+} */
+
+/* ----------------------------
+   Large spacer for scroll demo
+---------------------------- */
+/* .spacer {
+  height: 600px;
+} */
+
+/* ----------------------------
+   Chart container (ResizeObserver demo)
+---------------------------- */
+/* .chart-container {
+  width: 100%;
+  height: 150px;
+  background: #e0f2fe;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+
+/* p {
+  color: blue;
+  font-size: 18px;
+}
+
+body {
+  font-family: system-ui;
+  padding: 20px;
+  background: #f5f7fb;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.outer-box {
+  padding: 10px;
+  border: 2px dashed #ccc;
+  margin-bottom: 20px;
+} */
+
+/* body {
+  font-family: system-ui;
+  padding: 20px;
+  background: #f5f7fb;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 14px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+}
+
+button:hover {
+  background: #374151;
+}
+
+.container {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.box {
+  flex: 1;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  height: 300px;
+  overflow: auto;
+  border: 1px solid #e5e7eb;
+}
+
+li {
+  padding: 6px 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.highlight {
+  background: #fde047;
+}
+ */
+
+
+/* body {
+    font-family: system-ui;
+    padding: 20px;
+    background: #f5f7fb;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+.container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.box {
+    width: 80px;
+    height: 60px;
+    background: #4f46e5;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: width 0.2s;
+    font-size: 12px;
+}
+
+button {
+    margin-right: 10px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #111827;
+    color: white;
+}
+
+button:hover {
+    background: #374151;
+}
+
+.bad {
+    background: #ef4444;
+}
+
+.good {
+    background: #22c55e;
+}
+
+.raf {
+    background: #3b82f6;
+} */
