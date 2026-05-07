@@ -1,0 +1,358 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Student Manager</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        input,
+        select {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        button:hover {
+            background: #f0f0f0;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f8f9fa;
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        tr:hover td {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .grade-A {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .grade-B {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .grade-C {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .grade-F {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        #addForm {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        #addForm.open {
+            display: block;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        label {
+            font-size: 12px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Student Data Manager</h2>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search by name..." oninput="render()" />
+        <select id="filterGrade" onchange="render()">
+            <option value="">All grades</option>
+            <option value="A">Grade A</option>
+            <option value="B">Grade B</option>
+            <option value="C">Grade C</option>
+            <option value="F">Grade F</option>
+        </select>
+        <select id="sortBy" onchange="render()">
+            <option value="name">Sort by Name</option>
+            <option value="grade">Sort by Grade</option>
+            <option value="score">Sort by Score</option>
+        </select>
+        <button class="btn-primary" onclick="toggleForm()">+ Add Student</button>
+    </div>
+
+    <div id="addForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="newName" placeholder="Full name" />
+            </div>
+            <div class="form-group">
+                <label>Score (0–100)</label>
+                <input type="number" id="newScore" placeholder="Score" min="0" max="100" />
+            </div>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" id="newSubject" placeholder="Subject" />
+            </div>
+            <button class="btn-primary" onclick="addStudent()">Add</button>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Score</th>
+                <th>Grade</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+        // DATA — our core dataset
+        let students = [
+            { id: 1, name: "Ayesha Khan", subject: "Mathematics", score: 92 },
+            { id: 2, name: "Bilal Ahmed", subject: "Physics", score: 78 },
+            { id: 3, name: "Sara Malik", subject: "Chemistry", score: 85 },
+            { id: 4, name: "Rahul Sharma", subject: "Mathematics", score: 61 },
+            { id: 5, name: "Nadia Islam", subject: "Biology", score: 47 },
+            { id: 6, name: "Tariq Hassan", subject: "Physics", score: 88 },
+        ];
+
+        // LOGIC — pure functions, no DOM touching
+        function getGrade(score) {
+            if (score >= 90) return "A";
+            if (score >= 75) return "B";
+            if (score >= 60) return "C";
+            return "F";
+        }
+
+        function getFilteredStudents() {
+            const search = document
+                .getElementById("searchInput")
+                .value.toLowerCase();
+            const grade = document.getElementById("filterGrade").value;
+            const sortKey = document.getElementById("sortBy").value;
+
+            return [...students]
+                .filter((s) => s.name.toLowerCase().includes(search))
+                .filter((s) => (grade ? getGrade(s.score) === grade : true))
+                .sort((a, b) => {
+                    if (sortKey === "name") return a.name.localeCompare(b.name);
+                    if (sortKey === "score") return b.score - a.score;
+                    if (sortKey === "grade")
+                        return getGrade(a.score).localeCompare(getGrade(b.score));
+                });
+        }
+
+        function computeStats() {
+            const scores = students.map((s) => s.score);
+            return {
+                total: students.length,
+                average: (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(
+                    1,
+                ),
+                highest: Math.max(...scores),
+                passing: students.filter((s) => s.score >= 60).length,
+            };
+        }
+
+        // UI — only job is to read state and update DOM
+        function render() {
+            renderStats();
+            renderTable();
+        }
+
+        function renderStats() {
+            const s = computeStats();
+            document.getElementById("stats").innerHTML = `
+        <div class="stat-card">
+          <div class="stat-value">${s.total}</div>
+          <div class="stat-label">Total Students</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${s.average}</div>
+          <div class="stat-label">Average Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${s.highest}</div>
+          <div class="stat-label">Highest Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${s.passing}</div>
+          <div class="stat-label">Passing</div>
+        </div>
+      `;
+        }
+
+        function renderTable() {
+            const filtered = getFilteredStudents();
+            const tbody = document.getElementById("tableBody");
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;padding:2rem;">No students found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered
+                .map((s, index) => {
+                    const grade = getGrade(s.score);
+                    return `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${s.name}</td>
+            <td>${s.subject}</td>
+            <td>${s.score}</td>
+            <td><span class="badge grade-${grade}">${grade}</span></td>
+            <td><button onclick="removeStudent(${s.id})" style="color:#dc2626;border:none;background:none;cursor:pointer;font-size:18px;" title="Remove">×</button></td>
+          </tr>
+        `;
+                })
+                .join("");
+        }
+
+        function addStudent() {
+            const name = document.getElementById("newName").value.trim();
+            const score = parseInt(document.getElementById("newScore").value);
+            const subject = document.getElementById("newSubject").value.trim();
+
+            if (!name || isNaN(score) || score < 0 || score > 100 || !subject) {
+                alert("Please fill in all fields correctly.");
+                return;
+            }
+
+            // STATE update — add to array with a new unique id
+            const newId =
+                students.length > 0 ? Math.max(...students.map((s) => s.id)) + 1 : 1;
+            students.push({ id: newId, name, subject, score });
+
+            // Clear form
+            document.getElementById("newName").value = "";
+            document.getElementById("newScore").value = "";
+            document.getElementById("newSubject").value = "";
+            toggleForm();
+
+            render(); // re-render UI from updated state
+        }
+
+        function removeStudent(id) {
+            // filter returns a new array without the removed student
+            students = students.filter((s) => s.id !== id);
+            render();
+        }
+
+        function toggleForm() {
+            document.getElementById("addForm").classList.toggle("open");
+        }
+
+        // Initial render
+        render();
+    </script>
+</body>
+
+</html>

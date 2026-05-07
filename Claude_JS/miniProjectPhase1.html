@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculator</title>
+  </head>
+
+  <body>
+    <h1>Simple Calculator</h1>
+    <script>
+      // Step 1: Get two numbers from the user
+      const num1 = parseFloat(prompt("Enter the first number:"));
+      const num2 = parseFloat(prompt("Enter the second number:"));
+      const operator = prompt("Enter operator (+, -, *, /):");
+
+      // Step 2: Logic — figure out what to do
+      let result;
+
+      if (operator === "+") {
+        result = num1 + num2;
+      } else if (operator === "-") {
+        result = num1 - num2;
+      } else if (operator === "*") {
+        result = num1 * num2;
+      } else if (operator === "/") {
+        if (num2 === 0) {
+          result = "Error: Cannot divide by zero";
+        } else {
+          result = num1 / num2;
+        }
+      } else {
+        result = "Error: Unknown operator";
+      }
+
+      // Step 3: Output
+      alert(`${num1} ${operator} ${num2} = ${result}`);
+      console.log("Result:", result);
+    </script>
+  </body>
+</html>

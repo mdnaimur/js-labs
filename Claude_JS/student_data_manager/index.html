@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <h2>Student Data Manager</h2>
+    <div class="stats" id="stats"></div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search By Name" oninput="render()" />
+        <select id="filterGrade" onichange="render()">
+            <option value="">All grades</option>
+            <option value="A">Grade A</option>
+            <option value="B">Grade B</option>
+            <option value="C">Grade C</option>
+            <option value="F">Grade F</option>
+        </select>
+        <select id="sortBy" onchange="render()">
+            <option value="name">Sort by Name</option>
+            <option value="grade">Sort by Grade</option>
+            <option value="score">Sort by Score</option>
+        </select>
+        <button class="btn-primary" onclick="toggleForm()">+ Add Student</button>
+    </div>
+
+    <div id="addForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="newName" placeholder="Full Name" />
+            </div>
+            <div class="form-group">
+                <label>Score (0–100)</label>
+                <input type="number" id="newScore" placeholder="Score" min="0" max="100" />
+            </div>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" id="newSubject" placeholder="Subject" />
+            </div>
+            <button class="btn-primary" onclick="addStudent()">Add</button>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Score</th>
+                <th>Grade</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
