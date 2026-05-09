@@ -133,4 +133,71 @@ function addStudent() {
 }
 
 
+// Exercise 2: Write a function mergeStudents(arr1, arr2) that merges two student arrays, removes duplicates by id, and returns them sorted by score descending.
+
+// Exercise 3: Convert the students array from the project to a JSON string, then parse it back and confirm you can access students[0].name.
+
+
+// More Exercie phase 4
+
+
+
+render();
+
+
+
+
+
+const orders = [
+    { id: 1, product: "Laptop", category: "electronics", price: 999, status: "completed" },
+    { id: 2, product: "T-Shirt", category: "clothing", price: 29, status: "completed" },
+    { id: 3, product: "Phone", category: "electronics", price: 699, status: "pending" },
+    { id: 4, product: "Tablet", category: "electronics", price: 499, status: "completed" },
+    { id: 5, product: "Jeans", category: "clothing", price: 59, status: "cancelled" },
+];
+
+// 🔹 Calculate revenue
+function calculateRevenue() {
+    return orders
+        .filter(o =>
+            o.status === "completed" &&
+            o.category === "electronics" &&
+            o.price > 100
+        )
+        .reduce((sum, o) => sum + o.price, 0);
+}
+
+// 🔹 Render revenue
+function renderRevenue() {
+    const total = calculateRevenue();
+    document.getElementById("revenue").textContent = "$" + total;
+}
+
+// 🔹 Render table
+function renderTable() {
+    const table = document.getElementById("ordersTable");
+
+    table.innerHTML = "";
+
+    orders.forEach(order => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+      <td>${order.id}</td>
+      <td>${order.product}</td>
+      <td>${order.category}</td>
+      <td>$${order.price}</td>
+      <td class="${order.status}">${order.status}</td>
+    `;
+
+        table.appendChild(row);
+    });
+}
+
+// 🔹 Init
+function render() {
+    renderRevenue();
+    renderTable();
+}
+
 render();
