@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Mastery Demo</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .box {
+            width: 150px;
+            height: 80px;
+            background: lightgray;
+            margin-top: 10px;
+        }
+
+        .active {
+            border: 2px solid green;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .expanded {
+            transform: scale(1.1);
+        }
+
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            display: block;
+            margin: 8px 0;
+            padding: 8px;
+            width: 250px;
+        }
+
+        .error {
+            border: 2px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            height: 14px;
+        }
+
+        .active {
+            border: 2px solid green;
+        }
+
+        .box {
+            width: 200px;
+            height: 120px;
+            background: lightblue;
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        ul {
+            margin-top: 20px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 id="title">Initial Title</h1>
+
+    <input id="email" type="text" value="test@email.com">
+    <button class="submit-btn">Submit</button>
+
+    <div class="card">Card 1</div>
+    <div class="card">Card 2</div>
+
+    <p id="message"></p>
+
+    <div class="box"></div>
+
+    <img src="" alt="Old Alt">
+    <a href="#">Old Link</a>
+
+    <div id="container"></div>
+
+
+    <div id="containerr"></div>
+
+
+
+    <button class="buttonClass" id="myBtn">Click</button>
+
+
+
+
+    <section>
+
+
+        <h2>📋 Form</h2>
+
+        <form id="registrationForm">
+            <input id="name" placeholder="Name">
+            <span class="error-message"></span>
+
+            <input id="email" placeholder="Email">
+            <span class="error-message"></span>
+
+            <input id="password" type="password" placeholder="Password">
+            <span class="error-message"></span>
+
+            <select id="role">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <label>
+                <input type="checkbox" id="terms"> Agree to terms
+            </label>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+
+        <h2>🖱️ Mouse Area</h2>
+        <div class="box"></div>
+
+        <h2>📌 List (Event Delegation)</h2>
+        <ul id="list">
+            <li>
+                Item 1
+                <button class="edit-btn" data-id="1">Edit</button>
+                <button class="delete-btn" data-id="1">Delete</button>
+            </li>
+            <li>
+                Item 2
+                <button class="edit-btn" data-id="2">Edit</button>
+                <button class="delete-btn" data-id="2">Delete</button>
+            </li>
+        </ul>
+    </section>
+
+    <script src="./Phase5.js">
+
+    </script>
+
+</body>
+
+</html>

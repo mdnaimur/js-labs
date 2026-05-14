@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prophetic Daily Time-Block Calendar</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0f1117;
+    color: #e8e8e8;
+    min-height: 100vh;
+    padding: 24px 16px;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f5e6c8;
+    letter-spacing: 0.5px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+    color: #8a8a9a;
+    margin-top: 6px;
+  }
+
+  .arabic-title {
+    font-size: 18px;
+    color: #c9a84c;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 64px 1fr 260px;
+    gap: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  /* TIME COLUMN */
+  .time-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .time-label {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    font-size: 11px;
+    color: #5a5a72;
+    font-weight: 500;
+    border-right: 1px solid #1e1e2e;
+  }
+
+  /* CALENDAR COLUMN */
+  .calendar-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 1px solid #1e1e2e;
+  }
+
+  .slot {
+    height: 60px;
+    border-bottom: 1px solid #1a1a28;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .slot:hover { background: #1a1a2a; }
+
+  .block {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    border-radius: 8px;
+    padding: 7px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+    cursor: pointer;
+    transition: filter 0.15s, transform 0.1s;
+    overflow: hidden;
+    z-index: 2;
+    border-left: 3px solid transparent;
+  }
+
+  .block:hover {
+    filter: brightness(1.12);
+    transform: translateX(2px);
+  }
+
+  .block-title {
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .block-sub {
+    font-size: 10.5px;
+    opacity: 0.78;
+  }
+
+  .block-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 0.6;
+  }
+
+  /* BLOCK COLORS */
+  .salah     { background: #1a2f1a; border-color: #4caf6a; color: #a8d8b0; }
+  .worship   { background: #1a2535; border-color: #4a8fc0; color: #9ecfee; }
+  .deepwork  { background: #1f1a2e; border-color: #8b6fd4; color: #c8b0f0; }
+  .family    { background: #2a1f15; border-color: #d4884a; color: #f0c89e; }
+  .rest      { background: #1a2020; border-color: #4ab0b0; color: #9eded8; }
+  .light     { background: #22201a; border-color: #b0a04a; color: #e0d09e; }
+  .evening   { background: #25181e; border-color: #c05080; color: #eeaac8; }
+  .sleep     { background: #161620; border-color: #5050a0; color: #a0a0d8; }
+
+  /* SALAH MARKER */
+  .salah-marker {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+  }
+
+  .salah-marker-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #c9a84c, transparent);
+    opacity: 0.5;
+  }
+
+  .salah-marker-dot {
+    width: 8px; height: 8px;
+    background: #c9a84c;
+    border-radius: 50%;
+    margin-left: 4px;
+    box-shadow: 0 0 6px #c9a84c88;
+    flex-shrink: 0;
+  }
+
+  /* LEGEND / SIDEBAR */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sidebar-card {
+    background: #14141f;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .sidebar-card h3 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #5a5a72;
+    margin-bottom: 10px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 7px;
+    font-size: 12px;
+    color: #b0b0c0;
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .principle {
+    font-size: 12px;
+    color: #9090a8;
+    line-height: 1.55;
+    margin-bottom: 7px;
+    padding-left: 10px;
+    border-left: 2px solid #2a2a40;
+  }
+
+  .principle strong { color: #c9a84c; }
+
+  .hadith-box {
+    background: #0c0c18;
+    border: 1px solid #c9a84c33;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 11.5px;
+    color: #b09050;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .hadith-ref {
+    font-size: 10px;
+    color: #6a6a50;
+    margin-top: 5px;
+    font-style: normal;
+  }
+
+  .tooltip {
+    position: fixed;
+    background: #1a1a2e;
+    border: 1px solid #2e2e50;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: #d0d0e8;
+    max-width: 240px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    line-height: 1.55;
+    box-shadow: 0 8px 24px #00000080;
+  }
+
+  .tooltip.visible { opacity: 1; }
+  .tooltip-title { font-weight: 700; color: #f0e0b0; margin-bottom: 5px; font-size: 13px; }
+  .tooltip-hadith { color: #9a8060; font-style: italic; margin-top: 6px; font-size: 11px; }
+
+  .current-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: #ff6060;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .current-line::before {
+    content: '';
+    position: absolute;
+    left: -4px; top: -4px;
+    width: 10px; height: 10px;
+    background: #ff6060;
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="arabic-title">اليوم النبوي</div>
+  <h1>Prophetic Daily Time-Block Calendar</h1>
+  <p>A structured day built around Salah — баракah, focus, and intentional living</p>
+</div>
+
+<div class="layout">
+
+  <!-- TIME LABELS -->
+  <div class="time-col" id="timeCol"></div>
+
+  <!-- CALENDAR -->
+  <div class="calendar-col" id="calCol"></div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="sidebar-card">
+      <h3>Block Legend</h3>
+      <div class="legend-item"><div class="legend-dot" style="background:#4caf6a"></div> Salah</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4a8fc0"></div> Worship & Adhkar</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8b6fd4"></div> Deep Work</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#d4884a"></div> Family & Community</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4ab0b0"></div> Rest (Qaylulah)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#b0a04a"></div> Light Tasks</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c05080"></div> Evening Wind-Down</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#5050a0"></div> Sleep</div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>Core Principles</h3>
+      <div class="principle"><strong>Fajr First</strong> — The day is won or lost at Fajr</div>
+      <div class="principle"><strong>Salah-Anchored</strong> — 5 built-in resets, not interruptions</div>
+      <div class="principle"><strong>⅓ Rule</strong> — Work, worship, family in balance</div>
+      <div class="principle"><strong>Early Sleep</strong> — After Isha, wind down begins</div>
+      <div class="principle"><strong>Niyyah First</strong> — Intention before every block</div>
+    </div>
+
+    <div class="hadith-box">
+      "Take advantage of five before five: your youth, your health, your wealth, your free time, and your life."
+      <div class="hadith-ref">— Mustadrak al-Hakim | Sahih</div>
+    </div>
+
+    <div class="hadith-box">
+      "The most beloved deeds to Allah are those done consistently, even if small."
+      <div class="hadith-ref">— Sahih al-Bukhari, 6464</div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>Salah Times (Sample)</h3>
+      <div class="legend-item">🌙 Fajr — 4:30 AM</div>
+      <div class="legend-item">☀️ Zuhr — 12:30 PM</div>
+      <div class="legend-item">🌤 Asr — 4:00 PM</div>
+      <div class="legend-item">🌅 Maghrib — 6:45 PM</div>
+      <div class="legend-item">🌃 Isha — 8:15 PM</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// Hours to display: 3 AM → 11 PM (20 hours)
+const START_HOUR = 3;
+const TOTAL_HOURS = 21; // 3am to midnight
+const SLOT_HEIGHT = 60; // px per hour
+
+const blocks = [
+  {
+    start: 3.5,  end: 4.5,
+    type: 'sleep',
+    title: 'Tahajjud Prep / Last Sleep',
+    sub: 'Final rest before Fajr',
+    icon: '🌙',
+    tip: 'The Prophet ﷺ would sleep, then rise in the last third of the night for Tahajjud — a phased sleep system.',
+    hadith: '"He used to sleep the first part of the night and rise in the last part." — Bukhari'
+  },
+  {
+    start: 4.25, end: 5.25,
+    type: 'salah',
+    title: '🕌 Fajr Prayer',
+    sub: 'Fard + 2 Sunnah rakat',
+    icon: '☀️',
+    tip: 'Fajr is the cornerstone discipline. Every morning, at the hardest moment, you choose Allah over comfort.',
+    hadith: '"The two rak\'ahs of Fajr are better than this world and all it contains." — Muslim, 725'
+  },
+  {
+    start: 5.25, end: 6.25,
+    type: 'worship',
+    title: 'Morning Adhkar & Quran',
+    sub: 'Hisn al-Muslim adhkar · Quran recitation',
+    icon: '📖',
+    tip: 'Sit after Fajr until sunrise. Recite morning adhkar from Hisn al-Muslim. The Prophet ﷺ prayed for barakah in this hour specifically.',
+    hadith: '"O Allah, bless my Ummah in its early mornings." — Ibn Majah, 2236'
+  },
+  {
+    start: 6.25, end: 6.75,
+    type: 'worship',
+    title: 'Ishraq Prayer (optional)',
+    sub: '2 rakat after sunrise — reward of Hajj & Umrah',
+    icon: '✨',
+    tip: 'Whoever sits making dhikr from Fajr until sunrise then prays 2 rakat receives the reward of a complete Hajj and Umrah.',
+    hadith: '— Tirmidhi, 586 | Hasan'
+  },
+  {
+    start: 6.75, end: 9.5,
+    type: 'deepwork',
+    title: 'Deep Work Block #1',
+    sub: 'Highest priority task · Full focus · No phone',
+    icon: '🎯',
+    tip: 'The post-Fajr hours are neurologically optimal for deep work. The Prophet ﷺ made du\'a for barakah in this time. Do your most important work here.',
+    hadith: '"Allah loves that when one of you does a deed, he does it with excellence (itqan)." — Al-Bayhaqi'
+  },
+  {
+    start: 9.5,  end: 10.0,
+    type: 'light',
+    title: 'Duha Prayer + Break',
+    sub: '2–8 rakat · Movement · Water',
+    icon: '🤲',
+    tip: 'Duha prayer is a sadaqah for every joint in your body. Also a natural midmorning break — physical movement, hydration.',
+    hadith: '"Every morning a charity is due for each joint of the body..." — Muslim, 720'
+  },
+  {
+    start: 10.0, end: 12.25,
+    type: 'deepwork',
+    title: 'Deep Work Block #2',
+    sub: 'Second priority · Responsibilities · Projects',
+    icon: '💼',
+    tip: 'Continue focused work. The Prophet ﷺ was never idle — he engaged meaningfully with his responsibilities all morning.',
+    hadith: '"Be keen on what benefits you, seek Allah\'s help, and do not be helpless." — Muslim, 2664'
+  },
+  {
+    start: 12.5, end: 13.0,
+    type: 'salah',
+    title: '🕌 Zuhr Prayer',
+    sub: '4 Sunnah + 4 Fard + 2 Sunnah',
+    icon: '☀️',
+    tip: 'Zuhr is the midday anchor. It marks the official transition from morning deep work to afternoon mode. Make wudu, pause, reset.',
+    hadith: '"Salah was enjoined upon the believers at fixed times." — Quran 4:103'
+  },
+  {
+    start: 13.0, end: 13.5,
+    type: 'rest',
+    title: 'Qaylulah — Midday Rest',
+    sub: '15–20 min nap · Prophetic sunnah',
+    icon: '😴',
+    tip: 'The Prophet ﷺ recommended a brief midday rest. Not a 2-hour sleep — a short, intentional reset. It refreshes the mind for the afternoon.',
+    hadith: '"Take a nap, for the shayatin do not nap." — Al-Tabarani'
+  },
+  {
+    start: 13.5, end: 15.75,
+    type: 'deepwork',
+    title: 'Work Block #3',
+    sub: 'Meetings · Tasks · Community · Trade',
+    icon: '🤝',
+    tip: 'The afternoon block was when the Prophet ﷺ engaged with community affairs, judgments, teaching. After the midday reset, return with clarity.',
+    hadith: '"From the excellence of a person\'s Islam is his leaving what does not concern him." — Tirmidhi, 2317'
+  },
+  {
+    start: 15.75, end: 16.25,
+    type: 'salah',
+    title: '🕌 Asr Prayer',
+    sub: '4 Sunnah + 4 Fard',
+    icon: '🌤',
+    tip: 'Asr is specifically warned against missing. The Prophet ﷺ said whoever misses Asr is as if his family and wealth were destroyed.',
+    hadith: '"Whoever misses the Asr prayer, it is as if he has lost his family and wealth." — Bukhari, 552'
+  },
+  {
+    start: 16.25, end: 18.5,
+    type: 'family',
+    title: 'Family & Community Time',
+    sub: 'Children · Spouse · Neighbors · Movement',
+    icon: '🏡',
+    tip: 'The Prophet ﷺ was the most attentive of family members. He helped with household chores, played with children, honored his wives. Family time was non-negotiable.',
+    hadith: '"The best of you is the best to his family, and I am the best to my family." — Tirmidhi, 3895'
+  },
+  {
+    start: 18.5, end: 19.0,
+    type: 'salah',
+    title: '🕌 Maghrib Prayer',
+    sub: '2 Sunnah + 3 Fard + 2 Sunnah',
+    icon: '🌅',
+    tip: 'Maghrib marks the evening transition. After Maghrib, recite evening adhkar. The day officially begins to close.',
+    hadith: 'Evening adhkar close the day the same way morning adhkar open it — bookends of remembrance.'
+  },
+  {
+    start: 19.0, end: 20.0,
+    type: 'evening',
+    title: 'Evening Learning & Reflection',
+    sub: 'Quran · Knowledge · Light reading · Journaling',
+    icon: '🌙',
+    tip: 'The Prophet ﷺ spent evenings with family and in gentle, beneficial conversation and learning. No heavy stimulation, no heated arguments.',
+    hadith: '"He disliked sleeping before Isha and talking after it." — Bukhari, 568'
+  },
+  {
+    start: 20.0, end: 20.5,
+    type: 'salah',
+    title: '🕌 Isha Prayer',
+    sub: '4 Sunnah + 4 Fard + 2 Sunnah + Witr',
+    icon: '🌃',
+    tip: 'Isha is the day\'s closing prayer. After Isha, the wind-down begins. The Prophet ﷺ disliked unnecessary talk after Isha.',
+    hadith: '"Whoever prays Isha in congregation, it is as if he prayed half the night." — Muslim, 656'
+  },
+  {
+    start: 20.5, end: 21.25,
+    type: 'evening',
+    title: 'Evening Shutdown Ritual',
+    sub: 'Bedtime adhkar · Wudu · Family · No screens',
+    icon: '🤲',
+    tip: 'Perform bedtime adhkar (Ayat al-Kursi, three Quls, tasbihat). Make wudu. Prepare for sleep. No screens, no heated discussion.',
+    hadith: '"Recite Ayat al-Kursi when you go to bed — a guardian from Allah will watch over you." — Bukhari, 3274'
+  },
+  {
+    start: 21.25, end: 27.5,
+    type: 'sleep',
+    title: 'Sleep — Right Side · Niyyah to Wake for Fajr',
+    sub: 'Early sleep · 6–7 hrs · Bedtime intention set',
+    icon: '🌙',
+    tip: 'Sleep on your right side. Make intention to wake for Fajr. Early sleep is what makes Fajr possible. Sleep is itself ibadah when intended correctly.',
+    hadith: '"When you go to bed, put your right hand under your cheek." — Bukhari, 6314'
+  },
+];
+
+const timeCol = document.getElementById('timeCol');
+const calCol  = document.getElementById('calCol');
+
+// Build time labels & slots
+for (let h = START_HOUR; h < START_HOUR + TOTAL_HOURS; h++) {
+  const label = document.createElement('div');
+  label.className = 'time-label';
+  const hour = h % 24;
+  const ampm = hour < 12 ? 'AM' : 'PM';
+  const display = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+  label.textContent = `${display} ${ampm}`;
+  timeCol.appendChild(label);
+
+  const slot = document.createElement('div');
+  slot.className = 'slot';
+  slot.style.height = SLOT_HEIGHT + 'px';
+  calCol.appendChild(slot);
+}
+
+// Place blocks
+blocks.forEach(b => {
+  const top  = (b.start - START_HOUR) * SLOT_HEIGHT;
+  const height = (b.end - b.start) * SLOT_HEIGHT;
+  if (height < 1) return;
+
+  const div = document.createElement('div');
+  div.className = `block ${b.type}`;
+  div.style.top    = top + 'px';
+  div.style.height = (height - 3) + 'px';
+
+  div.innerHTML = `
+    <div class="block-title">${b.title}</div>
+    ${height > 38 ? `<div class="block-sub">${b.sub}</div>` : ''}
+    <span class="block-icon">${b.icon}</span>
+  `;
+
+  div.style.position = 'absolute';
+  div.style.left = '4px';
+  div.style.right = '4px';
+  div.style.zIndex = 2;
+
+  // Attach to correct slot row — use a wrapper overlay
+  calCol.style.position = 'relative';
+  calCol.appendChild(div);
+
+  // Tooltip
+  div.addEventListener('mouseenter', (e) => showTip(e, b));
+  div.addEventListener('mousemove',  (e) => moveTip(e));
+  div.addEventListener('mouseleave', hideTip);
+});
+
+// Reposition calendar as relative
+calCol.style.position = 'relative';
+calCol.style.height   = (TOTAL_HOURS * SLOT_HEIGHT) + 'px';
+
+// Current time line
+function drawCurrentLine() {
+  const now = new Date();
+  const hours = now.getHours() + now.getMinutes() / 60;
+  if (hours >= START_HOUR && hours < START_HOUR + TOTAL_HOURS) {
+    const top = (hours - START_HOUR) * SLOT_HEIGHT;
+    let line = document.getElementById('currentLine');
+    if (!line) {
+      line = document.createElement('div');
+      line.id = 'currentLine';
+      line.className = 'current-line';
+      calCol.appendChild(line);
+    }
+    line.style.top = top + 'px';
+  }
+}
+
+drawCurrentLine();
+setInterval(drawCurrentLine, 60000);
+
+// Tooltip
+const tooltip = document.getElementById('tooltip');
+
+function showTip(e, b) {
+  tooltip.innerHTML = `
+    <div class="tooltip-title">${b.title}</div>
+    <div>${b.tip}</div>
+    ${b.hadith ? `<div class="tooltip-hadith">${b.hadith}</div>` : ''}
+  `;
+  tooltip.classList.add('visible');
+  moveTip(e);
+}
+
+function moveTip(e) {
+  const x = e.clientX + 16;
+  const y = e.clientY - 10;
+  tooltip.style.left = Math.min(x, window.innerWidth - 260) + 'px';
+  tooltip.style.top  = Math.max(y, 8) + 'px';
+}
+
+function hideTip() {
+  tooltip.classList.remove('visible');
+}
+</script>
+</body>
+</html>

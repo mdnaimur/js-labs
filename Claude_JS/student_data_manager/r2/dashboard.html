@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Student Analytics Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>📊 Student Analytics Dashboard</h1>
+
+        <!-- KPI Cards -->
+        <div class="cards">
+            <div class="card">
+                <h3>Total Students</h3>
+                <p id="totalStudents">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Pass</h3>
+                <p id="passCount">0</p>
+            </div>
+
+            <div class="card fail">
+                <h3>Fail</h3>
+                <p id="failCount">0</p>
+            </div>
+        </div>
+
+        <!-- Average Scores -->
+        <div class="section">
+            <h2>📈 Average Scores by Subject</h2>
+            <div id="averages" class="grid"></div>
+        </div>
+
+        <!-- Top Students -->
+        <div class="section">
+            <h2>🏆 Top Students by Subject</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="topStudentsTable"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
